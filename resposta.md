@@ -150,19 +150,27 @@ Escopo: suíte completa das três classes de teste.
 
 Testes acrescentados ou aprimorados após a análise: A preencher.
 
+* `deveCalcularLocacaoEconomicaComDescontoPrataEAtraso => deveCalcularLocacaoEconomicaComDescontoPrataEUmaHoraDeAtraso`: horasAtraso 0 => 1
+* `deveCalcularLocacaoEconomicaComDescontoPrataParaQuatorzeDias`: NOVO
+* `deveCalcularLocacaoIntermediariaComSeguroBasicoEAtrasoDeDuasHoras`: quilometrosRodados 700 => 800
+* `deveCalcularLocacaoIntermediariaComSeguroBasicoEAtrasoDeTresHoras`: NOVO
+* `deveCalcularLocacaoEconomicaSemDescontoPrataoPorDiariasInsuficientes => deveCalcularLocacaoEconomicaSemDescontoPrataoPorDiariasInsuficientesECemQuilometrosExcedentes`: quilometrosRodados 250 => 300
+* `deveCalcularLocacaoEconomicaSemDescontoPrataoPorDiariasInsuficientesENoventaNoveQuilometrosExcedentes`: NOVO
+* `deveCalcularLocacaoEconomicaSemDescontoPrataoPorDiariasInsuficientesEUmQuilometroExcedentes`: NOVO
+
 Evidências HTML, XML e log (links relativos): A preencher.
 
 ### Análise individual de mutantes não mortos
 
 <!-- Repita os campos abaixo para cada mutante não morto. Se todos foram mortos, registre esse resultado e a evidência correspondente. -->
 
-- Identificação, linha e operador: A preencher.
-- Alteração realizada pelo mutante: A preencher.
-- Status no PIT: A preencher.
-- Tentativas de teste e resultados: A preencher.
-- Justificativa técnica da impossibilidade, quando aplicável: A preencher.
-- Demonstração de equivalência para todo o domínio previsto, quando alegada: A preencher.
-- Eventual flexibilização do bloqueio Maven e justificativa: A preencher.
+- Identificação, linha e operador: changed conditional boundary, 88, <=
+- Alteração realizada pelo mutante: changed conditional boundary.
+- Status no PIT: SURVIVED.
+- Tentativas de teste e resultados: testes com quilometros excedentes menores que 0, testes com quilometros excedentes acima de 0 (1km).
+- Justificativa técnica da impossibilidade, quando aplicável: mutante equivalente.
+- Demonstração de equivalência para todo o domínio previsto, quando alegada: O mutante subsituí a verificação `if (quilometrosExcedentes <= 0)` para `if (quilometrosExcedentes < 0)`, a única mudança que ocorre na execução é quando `quilometrosExcedentes = 0` na qual a condição recebera `False` e em seguida será feita a verificação `if (quilometrosExcedentes <= 100)` que receberá `True` e assim será atribuido `tarifaQuilometrica = new BigDecimal("0.80")`, no entanto o cálculo final será `custoQuilometragem = 0 * 0.80` que é o mesmo que `custoQuilometragem = 0`, portanto a saída final não será alterada.
+- Eventual flexibilização do bloqueio Maven e justificativa: N/A.
 
 ## 5.5. Test smells com tsDetect
 

@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class CoberturaArestasTest
 {
     private final CalculadoraCustoLocacao calculadora = new CalculadoraCustoLocacao();
-
+    //CT01
     @Test
     void deveLancarNullPointerExceptionQuandoCategoriaForNula()
     {
@@ -25,7 +25,7 @@ class CoberturaArestasTest
             false
         )).isInstanceOf(NullPointerException.class);
     }
-
+    //CT02
     @Test
     void deveLancarNullPointerExceptionQuandoNivelClienteForNulo()
     {
@@ -39,7 +39,7 @@ class CoberturaArestasTest
             false
         )).isInstanceOf(NullPointerException.class);
     }
-
+    //CT03
     @Test
     void deveLancarNullPointerExceptionQuandoSeguroForNulo()
     {
@@ -53,7 +53,7 @@ class CoberturaArestasTest
             false
         )).isInstanceOf(NullPointerException.class);
     }
-
+    //CT04
     @Test
     void deveLancarIllegalArgumentExceptionQuandoDiariasForemZero()
     {
@@ -67,7 +67,7 @@ class CoberturaArestasTest
             false
         )).isInstanceOf(IllegalArgumentException.class);
     }
-
+    //CT05
     @Test
     void deveLancarIllegalArgumentExceptionQuandoKmRodadosForemNegativos()
     {
@@ -81,7 +81,7 @@ class CoberturaArestasTest
             false
         )).isInstanceOf(IllegalArgumentException.class);
     }
-
+    //CT06
     @Test
     void deveLancarIllegalArgumentExceptionQuandoHorasAtrasoForemNegativas()
     {
@@ -95,39 +95,71 @@ class CoberturaArestasTest
             false
         )).isInstanceOf(IllegalArgumentException.class);
     }
-
+    //CT07
     @Test
-    void deveCalcularLocacaoEconomicaComDescontoPrata()
+    void deveCalcularLocacaoEconomicaComDescontoPrataEUmaHoraDeAtraso()
     {
         BigDecimal resultado = calculadora.calcularCustoLocacao(
             CategoriaVeiculo.ECONOMICO,
             NivelCliente.PRATA,
             7,
             700,
-            0,
+            1,
             TipoSeguro.SEM_SEGURO,
             false
         );
 
         assertThat(resultado).isEqualByComparingTo(new BigDecimal("718.20"));
     }
-
+    //CT07B
     @Test
-    void deveCalcularLocacaoIntermediariaComSeguroBasicoEAtraso()
+    void deveCalcularLocacaoEconomicaComDescontoPrataParaQuatorzeDias()
+    {
+        BigDecimal resultado = calculadora.calcularCustoLocacao(
+            CategoriaVeiculo.ECONOMICO,
+            NivelCliente.PRATA,
+            14,
+            700,
+            0,
+            TipoSeguro.SEM_SEGURO,
+            false
+        );
+
+        assertThat(resultado).isEqualByComparingTo(new BigDecimal("1436.40"));
+    }
+    //CT08
+    @Test
+    void deveCalcularLocacaoIntermediariaComSeguroBasicoEAtrasoDeDuasHoras()
     {
         BigDecimal resultado = calculadora.calcularCustoLocacao(
             CategoriaVeiculo.INTERMEDIARIO,
             NivelCliente.OURO,
             5,
-            700,
+            800,
             2,
             TipoSeguro.BASICO,
             false
         );
 
-        assertThat(resultado).isEqualByComparingTo(new BigDecimal("1166.50"));
+        assertThat(resultado).isEqualByComparingTo(new BigDecimal("1266.50"));
     }
+    //CT08B
+    @Test
+    void deveCalcularLocacaoIntermediariaComSeguroBasicoEAtrasoDeTresHoras()
+    {
+        BigDecimal resultado = calculadora.calcularCustoLocacao(
+            CategoriaVeiculo.INTERMEDIARIO,
+            NivelCliente.OURO,
+            5,
+            799,
+            3,
+            TipoSeguro.BASICO,
+            false
+        );
 
+        assertThat(resultado).isEqualByComparingTo(new BigDecimal("1301.50"));
+    }
+    //CT09
     @Test
     void deveCalcularLocacaoSUVComSeguroCompletoEAtrasoSuperiorATresHoras()
     {
@@ -143,7 +175,7 @@ class CoberturaArestasTest
 
         assertThat(resultado).isEqualByComparingTo(new BigDecimal("1180.00"));
     }
-
+    //CT10
     @Test
     void deveCalcularLocacaoEconomicaSemDescontoFidelidadePorAtrasoAnterior()
     {
@@ -159,7 +191,7 @@ class CoberturaArestasTest
 
         assertThat(resultado).isEqualByComparingTo(new BigDecimal("2280.00"));
     }
-
+    //CT11
     @Test
     void deveCalcularLocacaoEconomicaSemDescontoOuroPorDiariasInsuficientes()
     {
@@ -175,7 +207,7 @@ class CoberturaArestasTest
 
         assertThat(resultado).isEqualByComparingTo(new BigDecimal("456.00"));
     }
-
+    //CT12
     @Test
     void deveCalcularLocacaoEconomicaSemDescontoOuroPorAtrasoAnterior()
     {
@@ -191,20 +223,54 @@ class CoberturaArestasTest
 
         assertThat(resultado).isEqualByComparingTo(new BigDecimal("684.00"));
     }
-
+    //CT13
     @Test
-    void deveCalcularLocacaoEconomicaSemDescontoPrataoPorDiariasInsuficientes()
+    void deveCalcularLocacaoEconomicaSemDescontoPrataoPorDiariasInsuficientesECemQuilometrosExcedentes()
     {
         BigDecimal resultado = calculadora.calcularCustoLocacao(
             CategoriaVeiculo.ECONOMICO,
             NivelCliente.PRATA,
             2,
-            250,
+            300,
             0,
             TipoSeguro.SEM_SEGURO,
             false
         );
 
-        assertThat(resultado).isEqualByComparingTo(new BigDecimal("280.00"));
+        assertThat(resultado).isEqualByComparingTo(new BigDecimal("320.00"));
+    }
+
+    //CT13B
+    @Test
+    void deveCalcularLocacaoEconomicaSemDescontoPrataoPorDiariasInsuficientesENoventaNoveQuilometrosExcedentes()
+    {
+        BigDecimal resultado = calculadora.calcularCustoLocacao(
+            CategoriaVeiculo.ECONOMICO,
+            NivelCliente.PRATA,
+            2,
+            299,
+            0,
+            TipoSeguro.SEM_SEGURO,
+            false
+        );
+
+        assertThat(resultado).isEqualByComparingTo(new BigDecimal("319.20"));
+    }
+
+    //CT13C
+    @Test
+    void deveCalcularLocacaoEconomicaSemDescontoPrataoPorDiariasInsuficientesEUmQuilometroExcedentes()
+    {
+        BigDecimal resultado = calculadora.calcularCustoLocacao(
+            CategoriaVeiculo.ECONOMICO,
+            NivelCliente.PRATA,
+            2,
+            201,
+            0,
+            TipoSeguro.SEM_SEGURO,
+            false
+        );
+
+        assertThat(resultado).isEqualByComparingTo(new BigDecimal("240.80"));
     }
 }
