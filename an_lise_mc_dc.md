@@ -66,7 +66,7 @@ else if (nivelCliente == NivelCliente.PRATA && numeroDiarias >= 7 && !possuiAtra
 
 ### 2.2 Tabela de Verdade e Curto-Circuito no Runtime
 
-Para o operador `&&`, a avaliação ocorre da esquerda para a direita. O curto-circuito interrompe a execução assim que qualquer condição avalia para `false`. Como $D_2$ se encontra em um `else if`, a decisão só é atingida após passar sem exceções pelas validações prévias.
+Para o operador `&&`, a avaliação ocorre da esquerda para a direita. O curto-circuito interrompe a execução assim que qualquer condição avalia para `false`. Como $D_2$ se encontra no começo de um `else if`, ela não depende das demais condições da estrutura para ser atingida, no entanto ainda é necessário passar sem exceções pelas decisões N1-N6 relativas a entradas inválidas. É o caso para os testes considerados, em todos verifica-se que: `categoria != null`,`nivelCliente != null`,`seguro != null`,`numeroDiarias > 0`,`quilometrosRodados => 0`,`horasAtraso => 0`.
 
 | Caso | Entrada Concreta (`nivelCliente`, `numeroDiarias`, `possuiAtrasoAnterior`) | $A$ (Val) | $B$ (Val) | $C$ (Val) | $A$ (Efet) | $B$ (Efet) | $C$ (Efet) | Resultado $D_2$ | Desconto Fidelidade |
 | :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |

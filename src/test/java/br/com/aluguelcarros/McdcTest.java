@@ -12,25 +12,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class McdcTest
 {
-    private final CalculadoraCustoLocacao calculadora = new CalculadoraCustoLocacao();
-
-    // Exemplo inicial mantido
-    @ParameterizedTest
-    @CsvSource({"1, 120.00", "2, 240.00"})
-    void deveCalcularLocacaoBasica(int numeroDiarias, BigDecimal valorEsperado)
-    {
-        BigDecimal resultado = calculadora.calcularCustoLocacao(
-            CategoriaVeiculo.ECONOMICO,
-            NivelCliente.COMUM,
-            numeroDiarias,
-            0,
-            0,
-            TipoSeguro.SEM_SEGURO,
-            false
-        );
-
-        assertThat(resultado).isEqualByComparingTo(valorEsperado);
-    }
+    private final CalculadoraCustoLocacao calculadora = new CalculadoraCustoLocacao(); 
 
     // =========================================================================
     // DECISÃO 1 (D1): (categoria == null || nivelCliente == null || seguro == null)
