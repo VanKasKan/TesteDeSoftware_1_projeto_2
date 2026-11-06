@@ -77,7 +77,7 @@ Essas opções desativam as duas barreiras de mutação, mas não alteram os mut
 ## tsDetect
 
 ```bash
-mvn -Ptsdetect verify
+./scripts/mvn-tsdetect.sh -Ptsdetect verify
 ```
 
 O perfil chama `scripts/quality.py`, que baixa o [tsDetect oficial](https://github.com/TestSmells/TestSmellDetector) no commit fixo `e89ce1a28d56db314d159e8957591aef6002173d`, compila seu JAR e o executa com os **21 detectores e limiares padrão**. O código e o JAR ficam em `target/tools/tsdetect/`; `mvn clean` remove esse cache, exigindo uma nova preparação na execução seguinte.
@@ -103,7 +103,7 @@ mvn -Pjacoco,arestas clean verify
 mvn -Pjacoco,caminhos verify
 mvn -Pjacoco,mcdc verify
 mvn -Ppitest verify
-mvn -Ptsdetect verify
+./scripts/mvn-tsdetect.sh -Ptsdetect verify
 ```
 
 As análises por grupo devem ser executadas separadamente. PIT e tsDetect usam a suíte completa, e seus relatórios não substituem os relatórios isolados de cada critério.
