@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CalculadoraCustoLocacao.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">aluguel-carros-teste-estrutural</a> &gt; <a href="index.source.html" class="el_package">br.com.aluguelcarros</a> &gt; <span class="el_source">CalculadoraCustoLocacao.java</span></div><h1>CalculadoraCustoLocacao.java</h1><pre class="source lang-java linenums">package br.com.aluguelcarros;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
+<span class="fc" id="L6">public class CalculadoraCustoLocacao</span>
+{
+    public BigDecimal calcularCustoLocacao(CategoriaVeiculo categoria, NivelCliente nivelCliente, int numeroDiarias, int quilometrosRodados, int horasAtraso, TipoSeguro seguro, boolean possuiAtrasoAnterior)
+    {
+<span class="fc bfc" id="L10" title="All 6 branches covered.">        if (categoria == null || nivelCliente == null || seguro == null)</span>
+        {
+<span class="fc" id="L12">            throw new NullPointerException(&quot;Argumentos não podem ser nulos&quot;);</span>
+        }
+
+<span class="pc bpc" id="L15" title="1 of 2 branches missed.">        if (numeroDiarias &lt;= 0)</span>
+        {
+<span class="nc" id="L17">            throw new IllegalArgumentException(&quot;Número de diárias deve ser maior que zero&quot;);</span>
+        }
+
+<span class="pc bpc" id="L20" title="1 of 2 branches missed.">        if (quilometrosRodados &lt; 0)</span>
+        {
+<span class="nc" id="L22">            throw new IllegalArgumentException(&quot;Quilometragem rodada não pode ser negativa&quot;);</span>
+        }
+
+<span class="pc bpc" id="L25" title="1 of 2 branches missed.">        if (horasAtraso &lt; 0)</span>
+        {
+<span class="nc" id="L27">            throw new IllegalArgumentException(&quot;Horas de atraso não podem ser negativas&quot;);</span>
+        }
+
+        BigDecimal valorDiaria;
+<span class="pc bpc" id="L31" title="1 of 2 branches missed.">        if (categoria == CategoriaVeiculo.ECONOMICO)</span>
+        {
+<span class="fc" id="L33">            valorDiaria = new BigDecimal(&quot;120.00&quot;);</span>
+        }
+<span class="nc bnc" id="L35" title="All 2 branches missed.">        else if (categoria == CategoriaVeiculo.INTERMEDIARIO)</span>
+        {
+<span class="nc" id="L37">            valorDiaria = new BigDecimal(&quot;180.00&quot;);</span>
+        }
+        else
+        {
+<span class="nc" id="L41">            valorDiaria = new BigDecimal(&quot;280.00&quot;);</span>
+        }
+
+        BigDecimal taxaDescontoDuracao;
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        if (numeroDiarias &lt;= 2)</span>
+        {
+<span class="fc" id="L47">            taxaDescontoDuracao = BigDecimal.ZERO;</span>
+        }
+<span class="fc bfc" id="L49" title="All 2 branches covered.">        else if (numeroDiarias &lt;= 6)</span>
+        {
+<span class="fc" id="L51">            taxaDescontoDuracao = new BigDecimal(&quot;0.05&quot;);</span>
+        }
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">        else if (numeroDiarias &lt;= 14)</span>
+        {
+<span class="fc" id="L55">            taxaDescontoDuracao = new BigDecimal(&quot;0.10&quot;);</span>
+        }
+        else
+        {
+<span class="nc" id="L59">            taxaDescontoDuracao = new BigDecimal(&quot;0.15&quot;);</span>
+        }
+
+<span class="fc" id="L62">        BigDecimal valorBrutoDiarias = valorDiaria.multiply(BigDecimal.valueOf(numeroDiarias));</span>
+<span class="fc" id="L63">        BigDecimal descontoDuracao = valorBrutoDiarias.multiply(taxaDescontoDuracao);</span>
+<span class="fc" id="L64">        BigDecimal valorDiariasComDesconto = valorBrutoDiarias.subtract(descontoDuracao);</span>
+
+        // Cada condição representa um requisito independente para o benefício.
+        BigDecimal taxaDescontoFidelidade;
+<span class="fc bfc" id="L68" title="All 6 branches covered.">        if (nivelCliente == NivelCliente.PRATA &amp;&amp; numeroDiarias &gt;= 7 &amp;&amp; !possuiAtrasoAnterior)</span>
+        {
+<span class="fc" id="L70">            taxaDescontoFidelidade = new BigDecimal(&quot;0.05&quot;);</span>
+        }
+<span class="pc bpc" id="L72" title="5 of 6 branches missed.">        else if (nivelCliente == NivelCliente.OURO &amp;&amp; numeroDiarias &gt;= 5 &amp;&amp; !possuiAtrasoAnterior)</span>
+        {
+<span class="nc" id="L74">            taxaDescontoFidelidade = new BigDecimal(&quot;0.10&quot;);</span>
+        }
+        else
+        {
+<span class="fc" id="L78">            taxaDescontoFidelidade = BigDecimal.ZERO;</span>
+        }
+
+<span class="fc" id="L81">        BigDecimal descontoFidelidade = valorDiariasComDesconto.multiply(taxaDescontoFidelidade);</span>
+<span class="fc" id="L82">        BigDecimal valorFinalDiarias = valorDiariasComDesconto.subtract(descontoFidelidade);</span>
+
+        // O uso de long evita estouro ao multiplicar uma quantidade grande de diárias.
+<span class="fc" id="L85">        long franquiaQuilometros = 100L * numeroDiarias;</span>
+<span class="fc" id="L86">        long quilometrosExcedentes = (long) quilometrosRodados - franquiaQuilometros;</span>
+        BigDecimal custoQuilometragem;
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">        if (quilometrosExcedentes &lt;= 0)</span>
+        {
+<span class="fc" id="L90">            custoQuilometragem = BigDecimal.ZERO;</span>
+        }
+        else
+        {
+            BigDecimal tarifaQuilometrica;
+<span class="nc bnc" id="L95" title="All 2 branches missed.">            if (quilometrosExcedentes &lt;= 100)</span>
+            {
+<span class="nc" id="L97">                tarifaQuilometrica = new BigDecimal(&quot;0.80&quot;);</span>
+            }
+<span class="nc bnc" id="L99" title="All 2 branches missed.">            else if (quilometrosExcedentes &lt;= 300)</span>
+            {
+<span class="nc" id="L101">                tarifaQuilometrica = new BigDecimal(&quot;1.00&quot;);</span>
+            }
+            else
+            {
+<span class="nc" id="L105">                tarifaQuilometrica = new BigDecimal(&quot;1.50&quot;);</span>
+            }
+<span class="nc" id="L107">            custoQuilometragem = BigDecimal.valueOf(quilometrosExcedentes).multiply(tarifaQuilometrica);</span>
+        }
+
+        BigDecimal valorSeguroDiaria;
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">        if (seguro == TipoSeguro.SEM_SEGURO)</span>
+        {
+<span class="fc" id="L113">            valorSeguroDiaria = BigDecimal.ZERO;</span>
+        }
+<span class="nc bnc" id="L115" title="All 2 branches missed.">        else if (seguro == TipoSeguro.BASICO)</span>
+        {
+<span class="nc" id="L117">            valorSeguroDiaria = new BigDecimal(&quot;25.00&quot;);</span>
+        }
+        else
+        {
+<span class="nc" id="L121">            valorSeguroDiaria = new BigDecimal(&quot;45.00&quot;);</span>
+        }
+<span class="fc" id="L123">        BigDecimal custoSeguro = valorSeguroDiaria.multiply(BigDecimal.valueOf(numeroDiarias));</span>
+
+        BigDecimal custoAtraso;
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">        if (horasAtraso &lt;= 1)</span>
+        {
+<span class="fc" id="L128">            custoAtraso = BigDecimal.ZERO;</span>
+        }
+<span class="nc bnc" id="L130" title="All 2 branches missed.">        else if (horasAtraso &lt;= 3)</span>
+        {
+<span class="nc" id="L132">            custoAtraso = valorDiaria.multiply(new BigDecimal(&quot;0.20&quot;)).multiply(BigDecimal.valueOf(horasAtraso));</span>
+        }
+        else
+        {
+<span class="nc" id="L136">            custoAtraso = valorDiaria;</span>
+        }
+
+<span class="fc" id="L139">        BigDecimal total = valorFinalDiarias.add(custoQuilometragem).add(custoSeguro).add(custoAtraso);</span>
+<span class="fc" id="L140">        return total.setScale(2, RoundingMode.HALF_UP);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

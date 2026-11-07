@@ -77,6 +77,12 @@ Essas opções desativam as duas barreiras de mutação, mas não alteram os mut
 ## tsDetect
 
 ```bash
+mvn -Ptsdetect verify
+```
+
+ou
+
+```bash
 ./scripts/mvn-tsdetect.sh -Ptsdetect verify
 ```
 
@@ -103,8 +109,10 @@ mvn -Pjacoco,arestas clean verify
 mvn -Pjacoco,caminhos verify
 mvn -Pjacoco,mcdc verify
 mvn -Ppitest verify
-./scripts/mvn-tsdetect.sh -Ptsdetect verify
+mvn -Ptsdetect verify
 ```
+
+Para compatibilidade com JDK17 é possível executar tsdetect com: `./scripts/mvn-tsdetect.sh -Ptsdetect verify` 
 
 As análises por grupo devem ser executadas separadamente. PIT e tsDetect usam a suíte completa, e seus relatórios não substituem os relatórios isolados de cada critério.
 

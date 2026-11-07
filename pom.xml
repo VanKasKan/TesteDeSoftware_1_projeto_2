@@ -161,7 +161,7 @@
                 <tests.include>**/*Test.java</tests.include>
             </properties>
             <build><plugins><plugin>
-                <groupId>org.codehaus.mojo</groupId><artifactId>exec-maven-plugin</artifactId><version>3.5.0</version>
+                <groupId>org.codehaus.mojo</groupId><artifactId>GustavoFernando_IanSilva</artifactId><version>3.5.0</version>
                 <executions><execution>
                     <id>detect-test-smells</id><phase>verify</phase><goals><goal>exec</goal></goals>
                     <configuration>

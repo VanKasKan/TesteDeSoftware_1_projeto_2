@@ -111,7 +111,7 @@ class CoberturaArestasTest
 
         assertThat(resultado).isEqualByComparingTo(new BigDecimal("718.20"));
     }
-    //CT07B
+    //CT08
     @Test
     void deveCalcularLocacaoEconomicaComDescontoPrataParaQuatorzeDias()
     {
@@ -127,7 +127,7 @@ class CoberturaArestasTest
 
         assertThat(resultado).isEqualByComparingTo(new BigDecimal("1436.40"));
     }
-    //CT08
+    //CT09
     @Test
     void deveCalcularLocacaoIntermediariaComSeguroBasicoEAtrasoDeDuasHoras()
     {
@@ -143,7 +143,7 @@ class CoberturaArestasTest
 
         assertThat(resultado).isEqualByComparingTo(new BigDecimal("1266.50"));
     }
-    //CT08B
+    //CT10
     @Test
     void deveCalcularLocacaoIntermediariaComSeguroBasicoEAtrasoDeTresHoras()
     {
@@ -159,7 +159,7 @@ class CoberturaArestasTest
 
         assertThat(resultado).isEqualByComparingTo(new BigDecimal("1301.50"));
     }
-    //CT09
+    //CT11
     @Test
     void deveCalcularLocacaoSUVComSeguroCompletoEAtrasoSuperiorATresHoras()
     {
@@ -175,7 +175,7 @@ class CoberturaArestasTest
 
         assertThat(resultado).isEqualByComparingTo(new BigDecimal("1180.00"));
     }
-    //CT10
+    //CT12
     @Test
     void deveCalcularLocacaoEconomicaSemDescontoFidelidadePorAtrasoAnterior()
     {
@@ -191,7 +191,7 @@ class CoberturaArestasTest
 
         assertThat(resultado).isEqualByComparingTo(new BigDecimal("2280.00"));
     }
-    //CT11
+    //CT13
     @Test
     void deveCalcularLocacaoEconomicaSemDescontoOuroPorDiariasInsuficientes()
     {
@@ -207,7 +207,7 @@ class CoberturaArestasTest
 
         assertThat(resultado).isEqualByComparingTo(new BigDecimal("456.00"));
     }
-    //CT12
+    //CT14
     @Test
     void deveCalcularLocacaoEconomicaSemDescontoOuroPorAtrasoAnterior()
     {
@@ -223,7 +223,7 @@ class CoberturaArestasTest
 
         assertThat(resultado).isEqualByComparingTo(new BigDecimal("684.00"));
     }
-    //CT13
+    //CT15
     @Test
     void deveCalcularLocacaoEconomicaSemDescontoPrataoPorDiariasInsuficientesECemQuilometrosExcedentes()
     {
@@ -240,7 +240,7 @@ class CoberturaArestasTest
         assertThat(resultado).isEqualByComparingTo(new BigDecimal("320.00"));
     }
 
-    //CT13B
+    //CT16
     @Test
     void deveCalcularLocacaoEconomicaSemDescontoPrataoPorDiariasInsuficientesENoventaNoveQuilometrosExcedentes()
     {
@@ -257,7 +257,7 @@ class CoberturaArestasTest
         assertThat(resultado).isEqualByComparingTo(new BigDecimal("319.20"));
     }
 
-    //CT13C
+    //CT17
     @Test
     void deveCalcularLocacaoEconomicaSemDescontoPrataoPorDiariasInsuficientesEUmQuilometroExcedentes()
     {
